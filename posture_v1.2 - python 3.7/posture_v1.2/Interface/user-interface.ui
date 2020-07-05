@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>759</width>
-    <height>487</height>
+    <width>718</width>
+    <height>559</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -610,7 +610,7 @@ QProgressBar::chunk {
          </widget>
          <widget class="QPlainTextEdit" name="pte_reports">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
             <horstretch>0</horstretch>
             <verstretch>10</verstretch>
            </sizepolicy>
@@ -624,7 +624,7 @@ QProgressBar::chunk {
           <property name="maximumSize">
            <size>
             <width>16777215</width>
-            <height>1000000</height>
+            <height>10000</height>
            </size>
           </property>
           <property name="font">
@@ -681,8 +681,8 @@ background-color: #383838
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>98</width>
-            <height>87</height>
+            <width>674</width>
+            <height>443</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_5">
