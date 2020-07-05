@@ -55,7 +55,7 @@ with Posture, you will be able to recreate empty nodes, which were deleted. They
        
 #   Installation:
        1. in 3Ds Max 2021, Copy "posture_v1.2 - python 3.7" to "//Installation path/3ds Max 2021/scripts/Startup".
-       2. in 3Ds Max 2020 or lower version, Copy "posture_v1.2 - python 2.7" to "//Installation path/3ds Max 2020/scripts/Startup".
+       2. in 3Ds Max 2020 and lower version, Copy "posture_v1.2 - python 2.7" to "//Installation path/3ds Max 2020/scripts/Startup".
        
 #   How To Run it?
        1. It will be a macro script that you can call it by "Hotkey" (Shortcut), searching with "X", or run it in the "CGcenter" menu.
