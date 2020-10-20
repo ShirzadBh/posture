@@ -1,4 +1,6 @@
 # Posture v1.2 beta
+![AnimRef v1.0 User-Interface](screen/interface.jpg)
+
 Autodesk 3Ds Max free pose saver
  
 With Posture, you will be capable of saving multiple positions of unlimited objects! data can be stored in two ways, global and local (parent-related) or even both of them at the same time, therefore it is capable of storing character figures and different decoration of elements as well. Furthermore, few other pieces of information will be stored from selected objects, like WireColor, Parent, Children list, Name.
