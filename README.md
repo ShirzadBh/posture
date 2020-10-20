@@ -1,4 +1,4 @@
-# Posture v1.2 beta
+# Posture v1.3.0 beta
 ![AnimRef v1.0 User-Interface](screen/interface.jpg)
 
 Autodesk 3Ds Max free pose saver
