@@ -53,7 +53,11 @@ with Posture, you will be able to recreate empty nodes, which were deleted. They
        1. If you are working on a rig, save controllers and helpers transform instead of rig structure.
        2. If you are saving Local (parent-related) transforms, your objects should have a parent.
        3. When you want to create a global transform, it saved absolute transform from the origin.
-       
+
+#   Supported Version:
+
+    2018 - 2019 - 2020 - 2022
+         
 >installation: 
 	Unzip the "AnimRef.zip" inside "the 3Ds Max 20XX//ApplicationPlugins".
 	
