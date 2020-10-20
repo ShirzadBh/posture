@@ -38,14 +38,13 @@ with Posture, you will be able to recreate empty nodes, which were deleted. They
   
        1. Saving unlimited profiles for any type of objects
        2. Saving parent and children of selected objects
-       3. Saving wire color and object names
-       4. Saving information in an external file
-       5. Loading information from an external file
-       6. Loading Real-Time (optional)
-       7. Recreating points for deleted objects
-       8. Creating all hierarchical connection for recreated nodes
-       9. Exporting data as an external file.
-       10. Importing file from an external file.
+       3. Saving information in an external file
+       4. Loading information from an external file
+       5. Loading Real-Time (optional)
+       6. Recreating points for deleted objects
+       7. Creating all hierarchical connection for recreated nodes
+       8. Exporting data as an external file.
+       9. Importing file from an external file.
 
 #   Attention:
  
@@ -53,9 +52,9 @@ with Posture, you will be able to recreate empty nodes, which were deleted. They
        2. If you are saving Local (parent-related) transforms, your objects should have a parent.
        3. When you want to create a global transform, it saved absolute transform from the origin.
        
-#   Installation:
-       1. Copy "posture_v1.2 - python 3.7 / 2.7" to "//Installation path/3ds Max 2021/scripts/Startup".
-       
-#   How To Run it?
-       1. It will be a macro script that you can call it by "Hotkey" (Shortcut), searching with "X", or run it in the "CGcenter" menu.
-
+>installation: 
+	Unzip the "AnimRef.zip" inside "the 3Ds Max 20XX//ApplicationPlugins".
+	
+>How To Run: 
+	Now, it's a MacroScript, which you can assign a shortcut to it or search it using "X" in 3Ds Max.
+	
