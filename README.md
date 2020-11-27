@@ -56,6 +56,7 @@ with Posture, you will be able to recreate empty nodes, which were deleted. They
 
 >Easy installation: 
 	Run "One-Click Installation.bat".
+	
 >installation: 
 	Unzip the "Posture.zip" inside "C://ProgramData//Autodesk//ApplicationPlugins".
 	
