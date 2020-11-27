@@ -54,8 +54,10 @@ with Posture, you will be able to recreate empty nodes, which were deleted. They
        2. If you are saving Local (parent-related) transforms, your objects should have a parent.
        3. When you want to create a global transform, it saved absolute transform from the origin.
 
+>Easy installation: 
+	Run "One-Click Installation.bat".
 >installation: 
-	Unzip the "Posture.zip" inside "3Ds Max 20XX//ApplicationPlugins".
+	Unzip the "Posture.zip" inside "C://ProgramData//Autodesk//ApplicationPlugins".
 	
 >How To Run: 
 	Now, it's a MacroScript, which you can assign a shortcut to it or search it using "X" in 3Ds Max.
