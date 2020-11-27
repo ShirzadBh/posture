@@ -9,7 +9,7 @@ set maxVersion=2022
 
 set productVer=1.3.0
 
-set releaseDate=2020-11-4
+set releaseDate=2020-06-22
 set lastUpdate=2020-11-27
 
 set fileName=Posture.zip
