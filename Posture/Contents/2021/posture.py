@@ -25,7 +25,7 @@ class PostureDialog(QMainWindow):
         # Define Global Variables / Icons and Logo
         self.define_variables()
 
-        self.dir = mxs.getDir(mxs.name('maxRoot'))
+        self.dir = mxs.getDir(mxs.name('publicExchangeStoreInstallPath'))
 
         # Define icons
         self.icons()
@@ -47,43 +47,43 @@ class PostureDialog(QMainWindow):
     def icons(self):
         # Define Icons
         self.save_icon = QtGui.QIcon(
-            os.path.join(self.dir, 'ApplicationPlugins', 'Posture', 'Contents', 'Icons', 'save.png'))
+            os.path.join(self.dir, 'Posture', 'Contents', 'Icons', 'save.png'))
         self.folder_icon = QtGui.QIcon(
-            os.path.join(self.dir, 'ApplicationPlugins', 'Posture', 'Contents', 'Icons', 'folder.png'))
+            os.path.join(self.dir, 'Posture', 'Contents', 'Icons', 'folder.png'))
         self.geometry_icon = QtGui.QIcon(
-            os.path.join(self.dir, 'ApplicationPlugins', 'Posture', 'Contents', 'Icons', 'geometry.png'))
+            os.path.join(self.dir, 'Posture', 'Contents', 'Icons', 'geometry.png'))
         self.shape_icon = QtGui.QIcon(
-            os.path.join(self.dir, 'ApplicationPlugins', 'Posture', 'Contents', 'Icons', 'shape.png'))
+            os.path.join(self.dir, 'Posture', 'Contents', 'Icons', 'shape.png'))
         self.camera_icon = QtGui.QIcon(
-            os.path.join(self.dir, 'ApplicationPlugins', 'Posture', 'Contents', 'Icons', 'camera.png'))
+            os.path.join(self.dir, 'Posture', 'Contents', 'Icons', 'camera.png'))
         self.helper_icon = QtGui.QIcon(
-            os.path.join(self.dir, 'ApplicationPlugins', 'Posture', 'Contents', 'Icons', 'helper.png'))
+            os.path.join(self.dir, 'Posture', 'Contents', 'Icons', 'helper.png'))
         self.light_icon = QtGui.QIcon(
-            os.path.join(self.dir, 'ApplicationPlugins', 'Posture', 'Contents', 'Icons', 'light.png'))
+            os.path.join(self.dir, 'Posture', 'Contents', 'Icons', 'light.png'))
         self.spacewarp_icon = QtGui.QIcon(
-            os.path.join(self.dir, 'ApplicationPlugins', 'Posture', 'Contents', 'Icons', 'spacewarp.png'))
+            os.path.join(self.dir, 'Posture', 'Contents', 'Icons', 'spacewarp.png'))
         self.profile_icon = QtGui.QIcon(
-            os.path.join(self.dir, 'ApplicationPlugins', 'Posture', 'Contents', 'Icons', 'profile.png'))
+            os.path.join(self.dir, 'Posture', 'Contents', 'Icons', 'profile.png'))
         self.posture_icon = QtGui.QIcon(
-            os.path.join(self.dir, 'ApplicationPlugins', 'Posture', 'Contents', 'Icons', 'posture.png'))
+            os.path.join(self.dir, 'Posture', 'Contents', 'Icons', 'posture.png'))
         self.instagram_icon = QtGui.QIcon(
-            os.path.join(self.dir, 'ApplicationPlugins', 'Posture', 'Contents', 'Icons', 'instagram.png'))
+            os.path.join(self.dir, 'Posture', 'Contents', 'Icons', 'instagram.png'))
         self.cancel_icon = QtGui.QIcon(
-            os.path.join(self.dir, 'ApplicationPlugins', 'Posture', 'Contents', 'Icons', 'cancel.png'))
+            os.path.join(self.dir, 'Posture', 'Contents', 'Icons', 'cancel.png'))
         self.cgcenter_icon = QtGui.QIcon(
-            os.path.join(self.dir, 'ApplicationPlugins', 'Posture', 'Contents', 'Icons', 'cgcenter.png'))
+            os.path.join(self.dir, 'Posture', 'Contents', 'Icons', 'cgcenter.png'))
         self.telegram_icon = QtGui.QIcon(
-            os.path.join(self.dir, 'ApplicationPlugins', 'Posture', 'Contents', 'Icons', 'telegram.png'))
+            os.path.join(self.dir, 'Posture', 'Contents', 'Icons', 'telegram.png'))
         self.gumroad_icon = QtGui.QIcon(
-            os.path.join(self.dir, 'ApplicationPlugins', 'Posture', 'Contents', 'Icons', 'gumroad.png'))
+            os.path.join(self.dir, 'Posture', 'Contents', 'Icons', 'gumroad.png'))
         self.youtube_icon = QtGui.QIcon(
-            os.path.join(self.dir, 'ApplicationPlugins', 'Posture', 'Contents', 'Icons', 'youtube.png'))
+            os.path.join(self.dir, 'Posture', 'Contents', 'Icons', 'youtube.png'))
         self.facebook_icon = QtGui.QIcon(
-            os.path.join(self.dir, 'ApplicationPlugins', 'Posture', 'Contents', 'Icons', 'facebook.png'))
+            os.path.join(self.dir, 'Posture', 'Contents', 'Icons', 'facebook.png'))
         self.artstation_icon = QtGui.QIcon(
-            os.path.join(self.dir, 'ApplicationPlugins', 'Posture', 'Contents', 'Icons', 'artstation.png'))
+            os.path.join(self.dir, 'Posture', 'Contents', 'Icons', 'artstation.png'))
         self.twitter_icon = QtGui.QIcon(
-            os.path.join(self.dir, 'ApplicationPlugins', 'Posture', 'Contents', 'Icons', 'twitter.png'))
+            os.path.join(self.dir, 'Posture', 'Contents', 'Icons', 'twitter.png'))
 
 
     # Write Data To File
@@ -1264,7 +1264,7 @@ class PostureDialog(QMainWindow):
     # Def Assign User-Interface
     def init_UI(self):
         ui_file = QFile(
-            os.path.join(self.dir, 'ApplicationPlugins', 'Posture', 'Contents', 'interface', 'interface.ui'))
+            os.path.join(self.dir, 'Posture', 'Contents', 'interface', 'interface.ui'))
 
         ui_file.open(QFile.ReadOnly)
         self.ui = QUiLoader().load(ui_file, self)
