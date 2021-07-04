@@ -4,7 +4,7 @@ set productName=Posture
 set developerName=Shirzad Bahrami
 set websiteAddress=www.cgcenter.ir
 
-set minVersion=2020
+set minVersion=2018
 set maxVersion=2022
 
 set productVer=1.3.0
