@@ -2,15 +2,15 @@
 
 set productName=Posture
 set developerName=Shirzad Bahrami
-set websiteAddress=www.cgcenter.ir
+set websiteAddress=www.shirzadbahrami.com
 
 set minVersion=2018
-set maxVersion=2022
+set maxVersion=2025
 
-set productVer=1.3.0
+set productVer=1.3.1
 
 set releaseDate=2020-06-22
-set lastUpdate=2020-11-27
+set lastUpdate=2024-09-02
 
 set fileName=Posture.zip
 set installationPath=/Autodesk/ApplicationPlugins

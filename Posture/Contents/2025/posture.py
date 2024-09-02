@@ -1,22 +1,23 @@
 # Importing libraries
+import PySide6
 import json
 import os
+import pymxs
 import time
 import uuid
 import webbrowser
-
-import MaxPlus
-import pymxs
-from PySide2 import QtGui, QtCore, QtWidgets
-from PySide2.QtCore import QFile
-from PySide2.QtUiTools import QUiLoader
-from PySide2.QtWidgets import QFileDialog, QMessageBox
+from PySide6 import QtGui, QtCore
+from PySide6.QtCore import QFile
+from PySide6.QtGui import QIcon, QColor
+from PySide6.QtUiTools import QUiLoader
+from PySide6.QtWidgets import QMainWindow, QGridLayout, QWidget, QFileDialog, QMessageBox
 from pymxs import runtime as mxs
+from qtmax import GetQMaxMainWindow
 
 
 # Define Dialog Window
-class PostureDialog(QtWidgets.QDialog):
-    def __init__(self, parent=MaxPlus.GetQMaxMainWindow()):
+class PostureDialog(QMainWindow):
+    def __init__(self, parent=None):
         super(PostureDialog, self).__init__(parent)
 
         self.setWindowFlags(QtCore.Qt.WindowType.Window)
@@ -84,6 +85,7 @@ class PostureDialog(QtWidgets.QDialog):
         self.twitter_icon = QtGui.QIcon(
             os.path.join(self.dir, 'Posture', 'Contents', 'Icons', 'twitter.png'))
 
+
     # Write Data To File
     def write_data(self):
         mxs.escapeEnable = False
@@ -98,20 +100,19 @@ class PostureDialog(QtWidgets.QDialog):
                     save_file.close()
 
                     self.ui.pte_reports.appendHtml(
-                        '''<p><span style="color:#77e73a">#Posture data saved to <strong>%s</strong></span></p>''' %
-                        fname[0])
+                        f'''<p><span style="color:#77e73a">#Posture data saved to <strong>{fname[0]}</strong></span></p>''')
 
             else:
                 self.ui.pte_reports.appendHtml(
-                    '''<p><span style="color:red"> <strong>Error:</strong> </span></p>''')
+                    f'''<p><span style="color:red"> <strong>Error:</strong> </span></p>''')
                 self.ui.pte_reports.appendHtml(
-                    '''<p><span style="color:orange">Importing was Incomplete.</span></p>''')
+                    f'''<p><span style="color:orange">Importing was Incomplete.</span></p>''')
 
         except:
             self.ui.pte_reports.appendHtml(
-                '''<p><span style="color:red"> <strong>Error:</strong> </span></p>''')
+                f'''<p><span style="color:red"> <strong>Error:</strong> </span></p>''')
             self.ui.pte_reports.appendHtml(
-                '''<p><span style="color:orange">Exporting was Incomplete.</span></p>''')
+                f'''<p><span style="color:orange">Exporting was Incomplete.</span></p>''')
         mxs.escapeEnable = True
 
     # Load Data From File
@@ -129,27 +130,26 @@ class PostureDialog(QtWidgets.QDialog):
                     self.update_profile_list()
 
                     self.ui.pte_reports.appendHtml(
-                        '''<p><span style="color:#77e73a"><strong>%s</strong> loaded to #Posture.</span></p>''' % fname[
-                            0])
+                        f'''<p><span style="color:#77e73a"><strong>{fname[0]}</strong> loaded to #Posture.</span></p>''')
 
             else:
                 self.ui.pte_reports.appendHtml(
-                    '''<p><span style="color:red"> <strong>Error:</strong> </span></p>''')
+                    f'''<p><span style="color:red"> <strong>Error:</strong> </span></p>''')
                 self.ui.pte_reports.appendHtml(
-                    '''<p><span style="color:orange">Importing was Incomplete.</span></p>''')
+                    f'''<p><span style="color:orange">Importing was Incomplete.</span></p>''')
 
         except:
             self.ui.pte_reports.appendHtml(
-                '''<p><span style="color:red"> <strong>Error:</strong> </span></p>''')
+                f'''<p><span style="color:red"> <strong>Error:</strong> </span></p>''')
             self.ui.pte_reports.appendHtml(
-                '''<p><span style="color:orange">Importing was Incomplete.</span></p>''')
+                f'''<p><span style="color:orange">Importing was Incomplete.</span></p>''')
 
         mxs.escapeEnable = True
 
     # Jobs On First Execute
     def start(self):
         self.ui.pte_reports.appendHtml(
-            '''<p><span style="color:white" style="font-size:16px"> Welcome to #Posture v1.3.1 beta</span></p>''')
+            f'''<p><span style="color:white" style="font-size:16px"> Welcome to #Posture v1.3.1</span></p>''')
 
         self.ui.le_profile_rename.setVisible(False)
         self.ui.btn_rename_cancel.setVisible(False)
@@ -179,7 +179,7 @@ class PostureDialog(QtWidgets.QDialog):
 
         index = 0
         for i in self.global_data:
-            self.ui.lw_profiles.addItem("%s" % i)
+            self.ui.lw_profiles.addItem(f"{i}")
             self.ui.lw_profiles.item(index).setIcon(self.profile_icon)
             index += 1
             self.ui.progresss.setValue(index + 1)
@@ -333,16 +333,16 @@ class PostureDialog(QtWidgets.QDialog):
                         child_finder(current.children[i])
 
             def debug():
-                print("#%s | All selected" % len(nodes))
-                print("#%s | Node in Chain" % len(nodes_in_chain))
-                print("#%s | Independent nodes" % len(independent_nodes))
-                print("#%s | Out of Group" % len(group_members))
-                print("#%s | Group members" % len(group_members))
-                print("#%s | Group heads" % len(group_heads))
-                print("#%s | Head roots" % len(head_root))
-                print("#%s | Result" % len(result_list))
-                print("#%s | Result roots" % len(results_roots))
-                print("#%s | Result in order" % len(self.ordered_selection_list))
+                print(f"#{len(nodes)} | All selected")
+                print(f"#{len(nodes_in_chain)} | Node in Chain", nodes_in_chain)
+                print(f"#{len(independent_nodes)} | Independent nodes", independent_nodes)
+                print(f"#{len(out_of_groups)} | Out of Group", out_of_groups)
+                print(f"#{len(group_members)} | Group members", group_members)
+                print(f"#{len(group_heads)} | Group heads", group_heads)
+                print(f"#{len(head_root)} | Head roots", head_root)
+                print(f"#{len(result_list)} | Result", result_list)
+                print(f"#{len(results_roots)} | Result roots", results_roots)
+                print(f"#{len(self.ordered_selection_list)} | Result in order", self.ordered_selection_list)
 
             find_group_members()  # 1
             find_group_heads()  # 2
@@ -358,8 +358,7 @@ class PostureDialog(QtWidgets.QDialog):
             self.show_nodes_in_QListView()
 
             self.ui.pte_reports.appendHtml(
-                '''<p><span style="color:#999999"> "%s" items Added to selection.</span></p>''' % len(
-                    self.ordered_selection_list))
+                f'''<p><span style="color:#999999"> "{len(self.ordered_selection_list)}" items Added to selection.</span></p>''')
 
             mxs.escapeEnable = True
 
@@ -382,7 +381,7 @@ class PostureDialog(QtWidgets.QDialog):
                 # Find If Selected Item Is In Data
                 if profile_name in self.global_data:
 
-                    replay = QMessageBox.question(self, 'Posture', 'Do you want to delete"%s"?' % profile_name,
+                    replay = QMessageBox.question(self, 'Posture', f'Do you want to delete"{profile_name}"?',
                                                   QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
 
                     if replay == QMessageBox.Yes:
@@ -390,20 +389,19 @@ class PostureDialog(QtWidgets.QDialog):
                         self.ui.lw_profiles.takeItem(self.ui.lw_profiles.currentRow())
 
                         self.ui.pte_reports.appendHtml(
-                            '''<p><span style="color:orange"> <strong>"%s" </strong> deleted from 
-                            collection.</span></p>''' % profile_name)
+                            f'''<p><span style="color:orange"> <strong>"{profile_name}" </strong> deleted from collection.</span></p>''')
 
 
                     else:
                         self.ui.pte_reports.appendHtml(
-                            '''<p><span style="color:#999999"> Cancel deleting.</span></p>''')
+                            f'''<p><span style="color:#999999"> Cancel deleting.</span></p>''')
 
                 else:
                     print("No Data")
 
         except:
             self.ui.pte_reports.appendHtml(
-                '''<p><span style="color:#999999">Choose a profile.</span></p>''')
+                f'''<p><span style="color:#999999">Choose a profile.</span></p>''')
 
     # Rename Selected Profile
     def rename_profile(self):
@@ -423,18 +421,17 @@ class PostureDialog(QtWidgets.QDialog):
             old_name = self.ui.lw_profiles.currentItem().text()
             new_name = self.ui.le_profile_rename.text()
 
-            self.global_data["%s" % new_name] = self.global_data.pop("%s" % old_name)
+            self.global_data[f"{new_name}"] = self.global_data.pop(f"{old_name}")
 
             self.ui.le_profile_rename.setVisible(False)
             self.ui.btn_rename.setVisible(True)
             self.ui.btn_rename_cancel.setVisible(False)
 
-            self.ui.lw_profiles.currentItem().setText("%s" % new_name)
+            self.ui.lw_profiles.currentItem().setText(f"{new_name}")
             self.ui.le_profile_rename.setText('')
 
             self.ui.pte_reports.appendHtml(
-                '''<p><span style="color:#77e73a"> <strong>"%s" </strong> changed to 
-                <strong>"%s"</strong>.</span></p>''' % old_name, new_name)
+                f'''<p><span style="color:#77e73a"> <strong>"{old_name}" </strong> changed to <strong>"{new_name}"</strong>.</span></p>''')
 
             # Def Save Profile
 
@@ -571,10 +568,9 @@ class PostureDialog(QtWidgets.QDialog):
 
                 if len(trubled_nodes) > 0:
                     self.ui.pte_reports.appendHtml(
-                        '''<p><span style="color:red"> <strong>Error:</strong> </span></p>''')
+                        f'''<p><span style="color:red"> <strong>Error:</strong> </span></p>''')
                     self.ui.pte_reports.appendHtml(
-                        '''<p><span style="color:orange"> Objects in the following list don't have parent: <br 
-                        />Count: %s <br />Names: %s.</span></p>''' % len(trubled_nodes), trubled_nodes)
+                        f'''<p><span style="color:orange"> Objects in the following list don't have parent: <br />Count: {len(trubled_nodes)} <br />Names: {trubled_nodes}.</span></p>''')
 
             # Export Global Transform
             elif self.ui.chb_global.isChecked():
@@ -609,10 +605,9 @@ class PostureDialog(QtWidgets.QDialog):
 
                 if len(trubled_nodes) > 0:
                     self.ui.pte_reports.appendHtml(
-                        '''<p><span style="color:red"> <strong>Error:</strong> </span></p>''')
+                        f'''<p><span style="color:red"> <strong>Error:</strong> </span></p>''')
                     self.ui.pte_reports.appendHtml(
-                        '''<p><span style="color:orange"> Objects in the following list don't have parent: <br 
-                        />Count: %s <br />Names: %s.</span></p>''' % len(trubled_nodes), trubled_nodes)
+                        f'''<p><span style="color:orange"> Objects in the following list don't have parent: <br />Count: {len(trubled_nodes)} <br />Names: {trubled_nodes}.</span></p>''')
 
                 self.current_dict["parent_transform"] = self.parent_transform
                 self.current_dict["local_transform"] = self.local_transform
@@ -625,18 +620,18 @@ class PostureDialog(QtWidgets.QDialog):
 
                 self.ui.progresss.setValue(0)
 
-            self.global_data["%s" % profile_name] = self.current_dict
+            self.global_data[f"{profile_name}"] = self.current_dict
             self.add_profiles_to_list(profile_name)
             self.ui.progresss.setValue(0)
             self.ui.le_profile_name.setText('')
 
             self.ui.pte_reports.appendHtml(
-                '''<p><span style="color:#77e73a"> <strong>"%s" </strong> added to collection.</span></p>''' % profile_name)
+                f'''<p><span style="color:#77e73a"> <strong>"{profile_name}" </strong> added to collection.</span></p>''')
             mxs.escapeEnable = True
 
     # Add Profiles To QTreeVidgets
     def add_profiles_to_list(self, name):
-        self.ui.lw_profiles.addItem("%s" % name)
+        self.ui.lw_profiles.addItem(f"{name}")
 
         for i in range(self.ui.lw_profiles.count()):
             self.ui.lw_profiles.item(i).setIcon(self.profile_icon)
@@ -650,7 +645,7 @@ class PostureDialog(QtWidgets.QDialog):
             self.ui.btn_add.setDisabled(False)
 
             self.ui.pte_reports.appendHtml(
-                '''<p><span style="color:#999999">"%s" Removed from selection.</span></p>''' % num)
+                f'''<p><span style="color:#999999">"{num}" Removed from selection.</span></p>''')
 
             self.ui.lw_selected.clear()
             self.ui.progress.setValue(0)
@@ -663,7 +658,7 @@ class PostureDialog(QtWidgets.QDialog):
 
         for i in range(len(self.ordered_selection_list)):
 
-            self.ui.lw_selected.addItem("%s" % self.ordered_selection_list[i].name)
+            self.ui.lw_selected.addItem(f"{self.ordered_selection_list[i].name}")
 
             if mxs.superclassof(self.ordered_selection_list[i]) == self.geometry_class:
                 self.ui.lw_selected.item(i).setIcon(self.geometry_icon)
@@ -689,7 +684,7 @@ class PostureDialog(QtWidgets.QDialog):
     def define_variables(self):
 
         # Set Deafault Path
-        self.path = mxs.getDir(mxs.name('scripts'))
+        self.path = os.path.dirname(os.path.abspath(__file__))
 
         # Path for auto loading on start
         # self.default_path = None
@@ -705,7 +700,27 @@ class PostureDialog(QtWidgets.QDialog):
         self.helper_class = mxs.execute("helper")
         self.spacewarp_class = mxs.execute("SpacewarpObject")
 
-        script_dir = mxs.getDir(mxs.name('scripts'))
+        # Define Icons
+        self.save_icon = QtGui.QIcon(os.path.dirname(os.path.realpath(__file__)) + "\\Icons\\save.png")
+        self.folder_icon = QtGui.QIcon(os.path.dirname(os.path.realpath(__file__)) + "\\Icons\\folder.png")
+        self.geometry_icon = QtGui.QIcon(os.path.dirname(os.path.realpath(__file__)) + "\\Icons\\geometry.png")
+        self.shape_icon = QtGui.QIcon(os.path.dirname(os.path.realpath(__file__)) + "\\Icons\\shape.png")
+        self.camera_icon = QtGui.QIcon(os.path.dirname(os.path.realpath(__file__)) + "\\Icons\\camera.png")
+        self.helper_icon = QtGui.QIcon(os.path.dirname(os.path.realpath(__file__)) + "\\Icons\\helper.png")
+        self.light_icon = QtGui.QIcon(os.path.dirname(os.path.realpath(__file__)) + "\\Icons\\light.png")
+        self.spacewarp_icon = QtGui.QIcon(os.path.dirname(os.path.realpath(__file__)) + "\\Icons\\spacewarp.png")
+        self.profile_icon = QtGui.QIcon(os.path.dirname(os.path.realpath(__file__)) + "\\Icons\\profile.png")
+        self.posture_icon = QtGui.QIcon(os.path.dirname(os.path.realpath(__file__)) + "\\Icons\\posture.png")
+        self.instagram_icon = QtGui.QIcon(os.path.dirname(os.path.realpath(__file__)) + "\\Icons\\instagram.png")
+        self.cancel_icon = QtGui.QIcon(os.path.dirname(os.path.realpath(__file__)) + "\\Icons\\cancel.png")
+        self.cgcenter_icon = QtGui.QIcon(os.path.dirname(os.path.realpath(__file__)) + "\\Icons\\cgcenter.png")
+
+        self.telegram_icon = QtGui.QIcon(os.path.dirname(os.path.realpath(__file__)) + "\\Icons\\telegram.png")
+        self.gumroad_icon = QtGui.QIcon(os.path.dirname(os.path.realpath(__file__)) + "\\Icons\\gumroad.png")
+        self.youtube_icon = QtGui.QIcon(os.path.dirname(os.path.realpath(__file__)) + "\\Icons\\youtube.png")
+        self.facebook_icon = QtGui.QIcon(os.path.dirname(os.path.realpath(__file__)) + "\\Icons\\facebook.png")
+        self.artstation_icon = QtGui.QIcon(os.path.dirname(os.path.realpath(__file__)) + "\\Icons\\artstation.png")
+        self.twitter_icon = QtGui.QIcon(os.path.dirname(os.path.realpath(__file__)) + "\\Icons\\twitter.png")
 
     # Select content
     def select(self):
@@ -722,14 +737,14 @@ class PostureDialog(QtWidgets.QDialog):
                 if mxs.getAppData(items, 10):
                     temporary_list.append(items)
 
-            self.ui.progresss.setMaximum(len(self.global_data["%s" % selected]["ID"]))
+            self.ui.progresss.setMaximum(len(self.global_data[f"{selected}"]["ID"]))
 
             # Loop trough all IDs in Selected Profile
-            for i in range(len(self.global_data["%s" % selected]["ID"])):
+            for i in range(len(self.global_data[f"{selected}"]["ID"])):
 
                 for item in temporary_list:
                     if mxs.getAppData(item, 10):
-                        if mxs.getAppData(item, 10) == self.global_data["%s" % selected]["ID"][i]:
+                        if mxs.getAppData(item, 10) == self.global_data[f"{selected}"]["ID"][i]:
                             selection_list.append(item)
                             temporary_list.remove(item)
                             break
@@ -754,7 +769,7 @@ class PostureDialog(QtWidgets.QDialog):
                 # Find Selected Profile
                 selected = self.ui.lw_profiles.currentItem().text()
 
-                self.ui.progresss.setMaximum(len(self.global_data["%s" % selected]["ID"]))
+                self.ui.progresss.setMaximum(len(self.global_data[f"{selected}"]["ID"]))
 
                 holded_temporary_list = []
                 temporary_list = []
@@ -772,12 +787,12 @@ class PostureDialog(QtWidgets.QDialog):
                         recreated_list = []
 
                         # Loop trough all IDs in Selected Profile
-                        for i in range(len(self.global_data["%s" % selected]["ID"])):
+                        for i in range(len(self.global_data[f"{selected}"]["ID"])):
 
                             self.ui.progresss.setValue(i + 1)
 
                             # Detect and select node by ID
-                            node_ID = self.global_data["%s" % selected]["ID"][i]
+                            node_ID = self.global_data[f"{selected}"]["ID"][i]
                             node = None
 
                             for item in temporary_list:
@@ -789,20 +804,19 @@ class PostureDialog(QtWidgets.QDialog):
 
                             # Find If Node Is Deleted Or Not
                             if mxs.isValidNode(node) != True:
-                                old_node_ID = self.global_data["%s" % selected]["ID"][i]
+                                old_node_ID = self.global_data[f"{selected}"]["ID"][i]
 
                                 # Create New node and make it's ID
                                 new_node = mxs.Point()
-                                new_node_ID = self.global_data["%s" % selected]["ID"][i]
+                                new_node_ID = self.global_data[f"{selected}"]["ID"][i]
                                 mxs.setAppData(new_node, 10, new_node_ID)
 
                                 # Apply Data To Objects
-                                new_node.transform = mxs.execute(
-                                    self.global_data["%s" % selected]["global_transform"][i])
-                                new_node.wirecolor = mxs.execute(self.global_data["%s" % selected]["color"][i])
+                                new_node.transform = mxs.execute(self.global_data[f"{selected}"]["global_transform"][i])
+                                new_node.wirecolor = mxs.execute(self.global_data[f"{selected}"]["color"][i])
 
                                 # new_node.name = mxs.execute(self.global_data[f"{selected}"]["name"][i])
-                                new_node.name = self.global_data["%s" % selected]["name"][i]
+                                new_node.name = self.global_data[f"{selected}"]["name"][i]
 
                                 recreated_list.append(new_node.name)
 
@@ -812,10 +826,10 @@ class PostureDialog(QtWidgets.QDialog):
                                 mxs.redrawViews()
 
                                 # Find Objects Parent
-                                if self.global_data["%s" % selected]["parent_ID"][i] != None:
+                                if self.global_data[f"{selected}"]["parent_ID"][i] != None:
 
                                     try:
-                                        parent_ID = self.global_data["%s" % selected]["parent_ID"][i]
+                                        parent_ID = self.global_data[f"{selected}"]["parent_ID"][i]
                                         parent_node = None
                                         for item in mxs.objects:
                                             if mxs.getAppData(item, 10) == parent_ID:
@@ -827,8 +841,8 @@ class PostureDialog(QtWidgets.QDialog):
                                         pass
 
                                 # Find Object Children
-                                if self.global_data["%s" % selected]["children_IDs"][i] != None:
-                                    for item in self.global_data["%s" % selected]["children_IDs"][i]:
+                                if self.global_data[f"{selected}"]["children_IDs"][i] != None:
+                                    for item in self.global_data[f"{selected}"]["children_IDs"][i]:
 
                                         try:
                                             child_ID = item
@@ -846,13 +860,13 @@ class PostureDialog(QtWidgets.QDialog):
                             else:
 
                                 # Apply Data To Objects
-                                node.transform = mxs.execute(self.global_data["%s" % selected]["global_transform"][i])
+                                node.transform = mxs.execute(self.global_data[f"{selected}"]["global_transform"][i])
                                 # node.wirecolor = mxs.execute(self.global_data[f"{selected}"]["color"][i])
                                 # node.name = mxs.execute(self.global_data[f"{selected}"]["name"][i])
 
                                 # Give stored color for group members
                                 if mxs.isGroupHead(node):
-                                    if self.global_data["%s" % selected]["color"][i] == "(color 0 0 0)":
+                                    if self.global_data[f"{selected}"]["color"][i] == "(color 0 0 0)":
                                         pass
                                     else:
                                         def child_finder(input):
@@ -862,14 +876,14 @@ class PostureDialog(QtWidgets.QDialog):
                                             for items in range(count):
 
                                                 current.children[items].wirecolor = mxs.execute(
-                                                    self.global_data["%s" % selected]["color"][i])
+                                                    self.global_data[f"{selected}"]["color"][i])
 
                                                 if current.children[items].children.count != 0:
                                                     child_finder(current.children[items])
 
                                         child_finder(node)
                                 else:
-                                    node.wirecolor = mxs.execute(self.global_data["%s" % selected]["color"][i])
+                                    node.wirecolor = mxs.execute(self.global_data[f"{selected}"]["color"][i])
 
                                 mxs.redrawViews()
 
@@ -877,19 +891,15 @@ class PostureDialog(QtWidgets.QDialog):
 
                         if len(recreated_list) > 0:
                             self.ui.pte_reports.appendHtml(
-                                '''<p><span style="color:#999999">"Object in the following list are recreated: 
-                                <br>"%s"</span></p>''' % recreated_list)
-
+                                f'''<p><span style="color:#999999">"Object in the following list are recreated: <br>"{recreated_list}"</span></p>''')
                         self.ui.pte_reports.appendHtml(
-                            '''<p><span style="color:#77e73a">Global profile: <strong>"%s"</strong> applied to 
-                            scene.</span></p>''' % selected)
-
+                            f'''<p><span style="color:#77e73a">Global profile: <strong>"{selected}"</strong> applied to scene in <strong>"{round(((time.time() - start_time)), 2)}"</strong> Seconds .</span></p>''')
 
                     except:
                         self.ui.pte_reports.appendHtml(
-                            '''<p><span style="color:red"> <strong>Error:</strong> </span></p>''')
+                            f'''<p><span style="color:red"> <strong>Error:</strong> </span></p>''')
                         self.ui.pte_reports.appendHtml(
-                            '''<p><span style="color:orange">Selected profile <strong>"%s"</strong> does not have "Global" data.</span></p>''' % selected)
+                            f'''<p><span style="color:orange">Selected profile <strong>"{selected}"</strong> does not have "Global" data.</span></p>''')
 
                 elif self.ui.rb_local.isChecked() and self.ui.chb_realtime.isChecked():
 
@@ -897,12 +907,12 @@ class PostureDialog(QtWidgets.QDialog):
                         recreated_list = []
 
                         # Loop trough all IDs in Selected Profile
-                        for i in range(len(self.global_data["%s" % selected]["ID"])):
+                        for i in range(len(self.global_data[f"{selected}"]["ID"])):
 
                             self.ui.progresss.setValue(i + 1)
 
                             # Detect and select node by ID
-                            node_ID = self.global_data["%s" % selected]["ID"][i]
+                            node_ID = self.global_data[f"{selected}"]["ID"][i]
                             node = None
                             for item in temporary_list:
                                 if mxs.getAppData(item, 10):
@@ -913,20 +923,20 @@ class PostureDialog(QtWidgets.QDialog):
 
                             # Find If Node Is Deleted Or Not
                             if mxs.isValidNode(node) != True:
-                                old_node_ID = self.global_data["%s" % selected]["ID"][i]
+                                old_node_ID = self.global_data[f"{selected}"]["ID"][i]
 
                                 # Create New node and make it's ID
                                 new_node = mxs.Point()
-                                new_node_ID = self.global_data["%s" % selected]["ID"][i]
+                                new_node_ID = self.global_data[f"{selected}"]["ID"][i]
                                 mxs.setAppData(new_node, 10, new_node_ID)
 
                                 recreated_list.append(new_node.name)
 
                                 # Find Objects Parent
-                                if self.global_data["%s" % selected]["parent_ID"][i] != None:
+                                if self.global_data[f"{selected}"]["parent_ID"][i] != None:
 
                                     try:
-                                        parent_ID = self.global_data["%s" % selected]["parent_ID"][i]
+                                        parent_ID = self.global_data[f"{selected}"]["parent_ID"][i]
                                         parent_node = None
                                         for item in mxs.objects:
                                             if mxs.getAppData(item, 10) == parent_ID:
@@ -938,8 +948,8 @@ class PostureDialog(QtWidgets.QDialog):
                                         pass
 
                                 # Find Object Children
-                                if self.global_data["%s" % selected]["children_IDs"][i] != None:
-                                    for item in self.global_data["%s" % selected]["children_IDs"][i]:
+                                if self.global_data[f"{selected}"]["children_IDs"][i] != None:
+                                    for item in self.global_data[f"{selected}"]["children_IDs"][i]:
 
                                         try:
                                             child_ID = item
@@ -956,9 +966,9 @@ class PostureDialog(QtWidgets.QDialog):
 
                                 # Apply Data To Objects
                                 new_node.transform = mxs.execute(
-                                    self.global_data["%s" % selected]["local_transform"][i]) * parent_node.transform
-                                new_node.wirecolor = mxs.execute(self.global_data["%s" % selected]["color"][i])
-                                new_node.name = self.global_data["%s" % selected]["name"][i]
+                                    self.global_data[f"{selected}"]["local_transform"][i]) * parent_node.transform
+                                new_node.wirecolor = mxs.execute(self.global_data[f"{selected}"]["color"][i])
+                                new_node.name = self.global_data[f"{selected}"]["name"][i]
 
                                 new_node.showLinks = True
                                 new_node.showLinksOnly = True
@@ -968,13 +978,13 @@ class PostureDialog(QtWidgets.QDialog):
                             else:
 
                                 node.transform = mxs.execute(
-                                    self.global_data["%s" % selected]["local_transform"][i]) * node.parent.transform
+                                    self.global_data[f"{selected}"]["local_transform"][i]) * node.parent.transform
                                 # node.wirecolor = mxs.execute(self.global_data[f"{selected}"]["color"][i])
                                 # node.name = mxs.execute(self.global_data[f"{selected}"]["name"][i])
 
                                 # Give stored color for group members
                                 if mxs.isGroupHead(node):
-                                    if self.global_data["%s" % selected]["color"][i] == "(color 0 0 0)":
+                                    if self.global_data[f"{selected}"]["color"][i] == "(color 0 0 0)":
                                         pass
                                     else:
                                         def child_finder(input):
@@ -984,14 +994,14 @@ class PostureDialog(QtWidgets.QDialog):
                                             for items in range(count):
 
                                                 current.children[items].wirecolor = mxs.execute(
-                                                    self.global_data["%s" % selected]["color"][i])
+                                                    self.global_data[f"{selected}"]["color"][i])
 
                                                 if current.children[items].children.count != 0:
                                                     child_finder(current.children[items])
 
                                         child_finder(node)
                                 else:
-                                    node.wirecolor = mxs.execute(self.global_data["%s" % selected]["color"][i])
+                                    node.wirecolor = mxs.execute(self.global_data[f"{selected}"]["color"][i])
 
                                 mxs.redrawViews()
 
@@ -999,17 +1009,16 @@ class PostureDialog(QtWidgets.QDialog):
 
                         if len(recreated_list) > 0:
                             self.ui.pte_reports.appendHtml(
-                                '''<p><span style="color:#999999">"Object in the following list are recreated: 
-                                <br>"$s"</span></p>''' % recreated_list)
+                                f'''<p><span style="color:#999999">"Object in the following list are recreated: <br>"{recreated_list}"</span></p>''')
 
                         self.ui.pte_reports.appendHtml(
-                            '''<p><span style="color:#77e73a">Local profile: <strong>"%s"</strong> applied to scene.</span></p>''' % selected)
+                            f'''<p><span style="color:#77e73a">Local profile: <strong>"{selected}"</strong> applied to scene in <strong>"{round(((time.time() - start_time)), 2)}"</strong> Seconds .</span></p>''')
 
                     except:
                         self.ui.pte_reports.appendHtml(
-                            '''<p><span style="color:red"> <strong>Error:</strong> </span></p>''')
+                            f'''<p><span style="color:red"> <strong>Error:</strong> </span></p>''')
                         self.ui.pte_reports.appendHtml(
-                            '''<p><span style="color:orange">Selected profile <strong>"%s"</strong> does not have "Local" data.</span></p>''' % selected)
+                            f'''<p><span style="color:orange">Selected profile <strong>"{selected}"</strong> does not have "Local" data.</span></p>''')
 
                 elif self.ui.rb_global.isChecked():
 
@@ -1019,12 +1028,12 @@ class PostureDialog(QtWidgets.QDialog):
                         recreated_list = []
 
                         # Loop trough all IDs in Selected Profile
-                        for i in range(len(self.global_data["%s" % selected]["ID"])):
+                        for i in range(len(self.global_data[f"{selected}"]["ID"])):
 
                             self.ui.progresss.setValue(i + 1)
 
                             # Detect and select node by ID
-                            node_ID = self.global_data["%s" % selected]["ID"][i]
+                            node_ID = self.global_data[f"{selected}"]["ID"][i]
                             node = None
 
                             for item in temporary_list:
@@ -1036,18 +1045,17 @@ class PostureDialog(QtWidgets.QDialog):
 
                             # Find If Node Is Deleted Or Not
                             if mxs.isValidNode(node) != True:
-                                old_node_ID = self.global_data["%s" % selected]["ID"][i]
+                                old_node_ID = self.global_data[f"{selected}"]["ID"][i]
 
                                 # Create New node and make it's ID
                                 new_node = mxs.Point()
-                                new_node_ID = self.global_data["%s" % selected]["ID"][i]
+                                new_node_ID = self.global_data[f"{selected}"]["ID"][i]
                                 mxs.setAppData(new_node, 10, new_node_ID)
 
                                 # Apply Data To Objects
-                                new_node.transform = mxs.execute(
-                                    self.global_data["%s" % selected]["global_transform"][i])
-                                new_node.wirecolor = mxs.execute(self.global_data["%s" % selected]["color"][i])
-                                new_node.name = self.global_data["%s" % selected]["name"][i]
+                                new_node.transform = mxs.execute(self.global_data[f"{selected}"]["global_transform"][i])
+                                new_node.wirecolor = mxs.execute(self.global_data[f"{selected}"]["color"][i])
+                                new_node.name = self.global_data[f"{selected}"]["name"][i]
 
                                 new_node.showLinks = True
                                 new_node.showLinksOnly = True
@@ -1055,10 +1063,10 @@ class PostureDialog(QtWidgets.QDialog):
                                 recreated_list.append(new_node.name)
 
                                 # Find Objects Parent
-                                if self.global_data["%s" % selected]["parent_ID"][i] != None:
+                                if self.global_data[f"{selected}"]["parent_ID"][i] != None:
 
                                     try:
-                                        parent_ID = self.global_data["%s" % selected]["parent_ID"][i]
+                                        parent_ID = self.global_data[f"{selected}"]["parent_ID"][i]
                                         parent_node = None
                                         for item in mxs.objects:
                                             if mxs.getAppData(item, 10) == parent_ID:
@@ -1070,8 +1078,8 @@ class PostureDialog(QtWidgets.QDialog):
                                         pass
 
                                 # Find Object Children
-                                if self.global_data["%s" % selected]["children_IDs"][i] != None:
-                                    for item in self.global_data["%s" % selected]["children_IDs"][i]:
+                                if self.global_data[f"{selected}"]["children_IDs"][i] != None:
+                                    for item in self.global_data[f"{selected}"]["children_IDs"][i]:
 
                                         try:
                                             child_ID = item
@@ -1089,13 +1097,13 @@ class PostureDialog(QtWidgets.QDialog):
                             else:
 
                                 # Apply Data To Objects
-                                node.transform = mxs.execute(self.global_data["%s" % selected]["global_transform"][i])
+                                node.transform = mxs.execute(self.global_data[f"{selected}"]["global_transform"][i])
                                 # node.wirecolor = mxs.execute(self.global_data[f"{selected}"]["color"][i])
                                 # node.name = mxs.execute(self.global_data[f"{selected}"]["name"][i])
 
                                 # Give stored color for group members
                                 if mxs.isGroupHead(node):
-                                    if self.global_data["%s" % selected]["color"][i] == "(color 0 0 0)":
+                                    if self.global_data[f"{selected}"]["color"][i] == "(color 0 0 0)":
                                         pass
                                     else:
                                         def child_finder(input):
@@ -1105,33 +1113,30 @@ class PostureDialog(QtWidgets.QDialog):
                                             for items in range(count):
 
                                                 current.children[items].wirecolor = mxs.execute(
-                                                    self.global_data["%s" % selected]["color"][i])
+                                                    self.global_data[f"{selected}"]["color"][i])
 
                                                 if current.children[items].children.count != 0:
                                                     child_finder(current.children[items])
 
                                         child_finder(node)
                                 else:
-                                    node.wirecolor = mxs.execute(self.global_data["%s" % selected]["color"][i])
+                                    node.wirecolor = mxs.execute(self.global_data[f"{selected}"]["color"][i])
 
                         mxs.enableSceneRedraw()
                         mxs.redrawViews()
 
                         if len(recreated_list) > 0:
                             self.ui.pte_reports.appendHtml(
-                                '''<p><span style="color:#999999">"Object in the following list are recreated: 
-                                <br>"$s"</span></p>''' % recreated_list)
+                                f'''<p><span style="color:#999999">"Object in the following list are recreated: <br>"{recreated_list}"</span></p>''')
                         self.ui.pte_reports.appendHtml(
-                            '''<p><span style="color:#77e73a">Global profile: <strong>"%s"</strong> applied to 
-                            scene.</span></p>''' % selected)
+                            f'''<p><span style="color:#77e73a">Global profile: <strong>"{selected}"</strong> applied to scene in <strong>"{round(((time.time() - start_time)), 2)}"</strong> Seconds .</span></p>''')
 
 
                     except:
                         self.ui.pte_reports.appendHtml(
-                            '''<p><span style="color:red"> <strong>Error:</strong> </span></p>''')
+                            f'''<p><span style="color:red"> <strong>Error:</strong> </span></p>''')
                         self.ui.pte_reports.appendHtml(
-                            '''<p><span style="color:orange">Selected profile <strong>"%s"</strong> does not have 
-                            "Global" data.</span></p>''' % selected)
+                            f'''<p><span style="color:orange">Selected profile <strong>"{selected}"</strong> does not have "Global" data.</span></p>''')
 
                 elif self.ui.rb_local.isChecked():
 
@@ -1140,12 +1145,12 @@ class PostureDialog(QtWidgets.QDialog):
                         recreated_list = []
 
                         # Loop trough all IDs in Selected Profile
-                        for i in range(len(self.global_data["%s" % selected]["ID"])):
+                        for i in range(len(self.global_data[f"{selected}"]["ID"])):
 
                             self.ui.progresss.setValue(i + 1)
 
                             # Detect and select node by ID
-                            node_ID = self.global_data["%s" % selected]["ID"][i]
+                            node_ID = self.global_data[f"{selected}"]["ID"][i]
                             node = None
                             for item in temporary_list:
                                 if mxs.getAppData(item, 10):
@@ -1156,11 +1161,11 @@ class PostureDialog(QtWidgets.QDialog):
 
                             # Find If Node Is Deleted Or Not
                             if mxs.isValidNode(node) != True:
-                                old_node_ID = self.global_data["%s" % selected]["ID"][i]
+                                old_node_ID = self.global_data[f"{selected}"]["ID"][i]
 
                                 # Create New node and make it's ID
                                 new_node = mxs.Point()
-                                new_node_ID = self.global_data["%s" % selected]["ID"][i]
+                                new_node_ID = self.global_data[f"{selected}"]["ID"][i]
                                 mxs.setAppData(new_node, 10, new_node_ID)
 
                                 new_node.showLinks = True
@@ -1169,10 +1174,10 @@ class PostureDialog(QtWidgets.QDialog):
                                 recreated_list.append(new_node.name)
 
                                 # Find Objects Parent
-                                if self.global_data["%s" % selected]["parent_ID"][i] != None:
+                                if self.global_data[f"{selected}"]["parent_ID"][i] != None:
 
                                     try:
-                                        parent_ID = self.global_data["%s" % selected]["parent_ID"][i]
+                                        parent_ID = self.global_data[f"{selected}"]["parent_ID"][i]
                                         parent_node = None
                                         for item in mxs.objects:
                                             if mxs.getAppData(item, 10) == parent_ID:
@@ -1184,8 +1189,8 @@ class PostureDialog(QtWidgets.QDialog):
                                         pass
 
                                 # Find Object Children
-                                if self.global_data["%s" % selected]["children_IDs"][i] != None:
-                                    for item in self.global_data["%s" % selected]["children_IDs"][i]:
+                                if self.global_data[f"{selected}"]["children_IDs"][i] != None:
+                                    for item in self.global_data[f"{selected}"]["children_IDs"][i]:
 
                                         try:
                                             child_ID = item
@@ -1202,20 +1207,20 @@ class PostureDialog(QtWidgets.QDialog):
 
                                 # Apply Data To Objects
                                 new_node.transform = mxs.execute(
-                                    self.global_data["%s" % selected]["local_transform"][i]) * parent_node.transform
-                                new_node.wirecolor = mxs.execute(self.global_data["%s" % selected]["color"][i])
-                                new_node.name = self.global_data["%s" % selected]["name"][i]
+                                    self.global_data[f"{selected}"]["local_transform"][i]) * parent_node.transform
+                                new_node.wirecolor = mxs.execute(self.global_data[f"{selected}"]["color"][i])
+                                new_node.name = self.global_data[f"{selected}"]["name"][i]
 
                             else:
 
                                 node.transform = mxs.execute(
-                                    self.global_data["%s" % selected]["local_transform"][i]) * node.parent.transform
+                                    self.global_data[f"{selected}"]["local_transform"][i]) * node.parent.transform
                                 # node.wirecolor = mxs.execute(self.global_data[f"{selected}"]["color"][i])
                                 # node.name = mxs.execute(self.global_data[f"{selected}"]["name"][i])
 
                                 # Give stored color for group members
                                 if mxs.isGroupHead(node):
-                                    if self.global_data["%s" % selected]["color"][i] == "(color 0 0 0)":
+                                    if self.global_data[f"{selected}"]["color"][i] == "(color 0 0 0)":
                                         pass
                                     else:
                                         def child_finder(input):
@@ -1225,34 +1230,31 @@ class PostureDialog(QtWidgets.QDialog):
                                             for items in range(count):
 
                                                 current.children[items].wirecolor = mxs.execute(
-                                                    self.global_data["%s" % selected]["color"][i])
+                                                    self.global_data[f"{selected}"]["color"][i])
 
                                                 if current.children[items].children.count != 0:
                                                     child_finder(current.children[items])
 
                                         child_finder(node)
                                 else:
-                                    node.wirecolor = mxs.execute(self.global_data["%s" % selected]["color"][i])
+                                    node.wirecolor = mxs.execute(self.global_data[f"{selected}"]["color"][i])
 
                         mxs.enableSceneRedraw()
                         mxs.redrawViews()
 
                         if len(recreated_list) > 0:
                             self.ui.pte_reports.appendHtml(
-                                '''<p><span style="color:#999999">"Object in the following list are recreated: 
-                                <br>"$s"</span></p>''' % recreated_list)
+                                f'''<p><span style="color:#999999">"Object in the following list are recreated: <br>"{recreated_list}"</span></p>''')
 
                         self.ui.pte_reports.appendHtml(
-                            '''<p><span style="color:#77e73a">Local profile: <strong>"%s" </strong> applied to 
-                            scene.</span></p>''' % selected)
+                            f'''<p><span style="color:#77e73a">Local profile: <strong>"{selected}" </strong> applied to scene in <strong>"{round(((time.time() - start_time)), 2)}"</strong> Seconds .</span></p>''')
 
 
                     except:
                         self.ui.pte_reports.appendHtml(
-                            '''<p><span style="color:red"> <strong>Error:</strong> </span></p>''')
+                            f'''<p><span style="color:red"> <strong>Error:</strong> </span></p>''')
                         self.ui.pte_reports.appendHtml(
-                            '''<p><span style="color:orange">Selected profile <strong>""</strong> does not have 
-                            "Local" data.</span></p>''' % selected)
+                            f'''<p><span style="color:orange">Selected profile <strong>"{selected}"</strong> does not have "Local" data.</span></p>''')
 
                 self.ui.progresss.setValue(0)
                 mxs.enableSceneRedraw()
@@ -1261,20 +1263,17 @@ class PostureDialog(QtWidgets.QDialog):
 
     # Def Assign User-Interface
     def init_UI(self):
-        lay = QtWidgets.QHBoxLayout()
-        lay.setMargin(0)
         ui_file = QFile(
             os.path.join(self.dir, 'Posture', 'Contents', 'interface', 'interface.ui'))
+
         ui_file.open(QFile.ReadOnly)
         self.ui = QUiLoader().load(ui_file, self)
         ui_file.close()
-        lay.addWidget(self.ui)
-        self.setLayout(lay)
 
 
 # Execute Posture
 def execute():
-    posture = PostureDialog()
+    posture = PostureDialog(GetQMaxMainWindow())
     posture.show()
 
 

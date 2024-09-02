@@ -31,7 +31,7 @@ class PostureDialog(QMainWindow):
         self.icons()
 
         # Set Dialog Properties
-        self.setWindowTitle('Posture - v1.3.0 beta')
+        self.setWindowTitle('Posture - v1.3.1 beta')
         self.setWindowIcon(self.posture_icon)
         self.resize(700, 480)
 
@@ -149,7 +149,7 @@ class PostureDialog(QMainWindow):
     # Jobs On First Execute
     def start(self):
         self.ui.pte_reports.appendHtml(
-            f'''<p><span style="color:white" style="font-size:16px"> Welcome to #Posture v1.3.0</span></p>''')
+            f'''<p><span style="color:white" style="font-size:16px"> Welcome to #Posture v1.3.1</span></p>''')
 
         self.ui.le_profile_rename.setVisible(False)
         self.ui.btn_rename_cancel.setVisible(False)
