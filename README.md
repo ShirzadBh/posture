@@ -1,4 +1,4 @@
-# Posture v1.3.0 beta
+# Posture
 ![AnimRef v1.0 User-Interface](screen/interface.jpg)
 
 Autodesk 3Ds Max free pose saver
@@ -65,5 +65,5 @@ with Posture, you will be able to recreate empty nodes, which were deleted. They
 	
 >Supported Version:
 
-    2018 - 2019 - 2020 - 2021 - 2022
+    2018 - 2019 - 2020 - 2021 - 2022 - 2023 - 2024 - 2025
 	
